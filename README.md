@@ -13,18 +13,23 @@ You'll need to have `docker` and `curl` to perform these benchmarks
    git clone https://github.com/hasura/graphql-bench.git && cd graphql-bench
    ```
 
-2. Setup the graphql servers that you are interested in.
+2. Build the tooling
+   ```bash
+   docker build --no-cache -t "hasura/graphql-bench:0.2" "$(pwd)/tooling"
+   ```
+
+3. Setup the graphql servers that you are interested in.
    ```bash
    ./hasura/manage.sh init
    ./prisma/manage.sh init
    ./postgraphile/manage.sh init
    ```
 
-3. Define the queries that you would like to benchmark in `hasura/queries.graphql`, `prisma/queries.graphql`, `postgraphile/queries.graphql`. There are few queries that already exist.
+4. Define the queries that you would like to benchmark in `hasura/queries.graphql`, `prisma/queries.graphql`, `postgraphile/queries.graphql`. There are few queries that already exist.
 
-4. Define a benchmark (checkout sample.bench.yaml) say bench.yaml.
+5. Define a benchmark (checkout sample.bench.yaml) say bench.yaml.
 
-5. Run the benchmark
+6. Run the benchmark
    ```bash
    cat bench.yaml | docker run -i --rm -p 8050:8050 -v $(pwd):/graphql-bench/ws hasura/graphql-bench:0.2
    ```
@@ -34,7 +39,7 @@ You'll need to have `docker` and `curl` to perform these benchmarks
    ```
    This opens up a http server at http://127.0.0.1:8050 which displays the results of the benchmark.
 
-6. Tear down the setup
+7. Tear down the setup
    ```bash
    ./hasura/manage.sh nuke
    ./prisma/manage.sh nuke
